@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEF / TCF Writing Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2235;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-orange: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #2d3748;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --accent-blue: #2563eb;
+            --accent-blue-hover: #1d4ed8;
+            --accent-green: #059669;
+            --accent-red: #dc2626;
+            --accent-orange: #d97706;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .theme-toggle .sun-icon {
+            display: block;
+        }
+
+        [data-theme="light"] .theme-toggle .moon-icon {
+            display: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        .setup-panel {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .setup-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        select {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:hover {
+            border-color: var(--accent-blue);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .question-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-danger {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .timer-display {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.25rem 1.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .timer-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .timer-badge {
+            background: var(--bg-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .timer-badge strong {
+            color: var(--text-primary);
+        }
+
+        .timer-clock {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+
+        .timer-clock.warning {
+            color: var(--accent-orange);
+        }
+
+        .timer-clock.danger {
+            color: var(--accent-red);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .word-count {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+        }
+
+        .word-count-number {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .word-count-number.good {
+            color: var(--accent-green);
+        }
+
+        .word-count-number.warning {
+            color: var(--accent-orange);
+        }
+
+        .word-count-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .word-count-min {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-display {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: var(--shadow);
+        }
+
+        .question-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .accent-keyboard {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            box-shadow: var(--shadow);
+        }
+
+        .accent-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .accent-btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .accent-btn:active {
+            transform: translateY(0);
+        }
+
+        .accent-divider {
+            width: 1px;
+            background: var(--border-color);
+            margin: 0 0.25rem;
+        }
+
+        .writing-area {
+            width: 100%;
+            min-height: 350px;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .writing-area:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .writing-area::placeholder {
+            color: var(--text-muted);
+        }
+
+        .writing-area:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .exam-mode .setup-panel {
+            display: none;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0 0.25rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .min-words {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .results-panel {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .results-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            background: var(--bg-secondary);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .info-box {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-box strong {
+            color: var(--text-primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .timer-clock {
+                font-size: 2rem;
+            }
+
+            .timer-display {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timer-info {
+                justify-content: center;
+            }
+
+            .accent-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
+            }
+
+            .theme-toggle {
+                position: relative;
+                margin-bottom: 1rem;
+            }
+
+            header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
+                <svg class="moon-icon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="sun-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+            <div class="logo">
+                <div class="logo-icon">É</div>
+                <h1>Expression Écrite</h1>
+            </div>
+            <p class="subtitle">TEF / TCF Writing Practice Tool</p>
+        </header>
+
+        <div id="setup-section">
+            <div class="setup-panel">
+                <div class="setup-row">
+                    <div class="form-group">
+                        <label for="exam-type">Exam Type</label>
+                        <select id="exam-type">
+                            <option value="tef">TEF Canada</option>
+                            <option value="tcf">TCF Canada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="section">Section</label>
+                        <select id="section">
+                            <option value="a">Section A</option>
+                            <option value="b">Section B</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="question">Question / Prompt (paste here)</label>
+                    <textarea id="question" class="question-input" placeholder="Paste your writing prompt here... 
+
+Example: Voici le début d'un article de presse ; Terminez cet article : en ajoutant à la suite un texte de 80 mots minimum..."></textarea>
+                </div>
+
+                <div class="info-box">
+                    <p>
+                        <strong>Timer:</strong> 
+                        <span id="timer-preview">25 minutes</span> &nbsp;•&nbsp; 
+                        <strong>Minimum:</strong> 
+                        <span id="words-preview">80 mots</span>
+                    </p>
+                </div>
+
+                <button id="start-btn" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Commencer
+                </button>
+            </div>
+        </div>
+
+        <div id="exam-section" class="hidden">
+            <div class="timer-display">
+                <div class="timer-info">
+                    <div class="timer-badge">
+                        <strong id="exam-label">TEF Canada</strong> • <span id="section-label">Section A</span>
+                    </div>
+                </div>
+                <div class="timer-clock" id="timer">25:00</div>
+                <div class="word-count">
+                    <span class="word-count-number" id="word-count">0</span>
+                    <span class="word-count-label">mots</span>
+                    <span class="word-count-min">minimum: <span id="min-words">80</span></span>
+                </div>
+            </div>
+
+            <div class="question-display" id="question-display">
+                <div class="question-label">Consigne</div>
+                <div class="question-text" id="question-text">Your question will appear here...</div>
+            </div>
+
+            <div class="accent-keyboard">
+                <button class="accent-btn" data-char="à">à</button>
+                <button class="accent-btn" data-char="â">â</button>
+                <button class="accent-btn" data-char="ç">ç</button>
+                <button class="accent-btn" data-char="é">é</button>
+                <button class="accent-btn" data-char="è">è</button>
+                <button class="accent-btn" data-char="ê">ê</button>
+                <button class="accent-btn" data-char="ë">ë</button>
+                <button class="accent-btn" data-char="î">î</button>
+                <button class="accent-btn" data-char="ï">ï</button>
+                <button class="accent-btn" data-char="ô">ô</button>
+                <button class="accent-btn" data-char="ù">ù</button>
+                <button class="accent-btn" data-char="û">û</button>
+                <button class="accent-btn" data-char="ü">ü</button>
+                <button class="accent-btn" data-char="œ">œ</button>
+                <div class="accent-divider"></div>
+                <button class="accent-btn" data-char="À">À</button>
+                <button class="accent-btn" data-char="Ç">Ç</button>
+                <button class="accent-btn" data-char="É">É</button>
+                <button class="accent-btn" data-char="È">È</button>
+                <button class="accent-btn" data-char="Ê">Ê</button>
+                <button class="accent-btn" data-char="Œ">Œ</button>
+                <div class="accent-divider"></div>
+                <button class="accent-btn" data-char="«">«</button>
+                <button class="accent-btn" data-char="»">»</button>
+                <button class="accent-btn" data-char="'">&#39;</button>
+                <button class="accent-btn" data-char="—">—</button>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>En cours</span>
+                </div>
+                <div class="min-words">Objectif: <span id="min-words-label">80</span> mots minimum</div>
+            </div>
+
+            <textarea 
+                id="writing-area" 
+                class="writing-area" 
+                placeholder="Commencez à écrire ici..."
+            ></textarea>
+
+            <div class="actions">
+                <button id="finish-btn" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Terminer
+                </button>
+                <button id="reset-btn" class="btn btn-danger">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                    Recommencer
+                </button>
+            </div>
+
+            <div id="results-panel" class="results-panel hidden">
+                <div class="results-title">✓ Session terminée</div>
+                <div class="results-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="final-words">0</div>
+                        <div class="stat-label">Mots écrits</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="final-time">00:00</div>
+                        <div class="stat-label">Temps utilisé</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="final-wpm">0</div>
+                        <div class="stat-label">Mots/minute</div>
+                    </div>
+                </div>
+                <button id="new-session-btn" class="btn btn-secondary">Nouvelle session</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Built for TEF/TCF practice • <a href="https://www.lefrancaisdesaffaires.fr" target="_blank">Official TEF Info</a></p>
+        </footer>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const examType = document.getElementById('exam-type');
+        const section = document.getElementById('section');
+        const questionInput = document.getElementById('question');
+        const startBtn = document.getElementById('start-btn');
+        const setupSection = document.getElementById('setup-section');
+        const examSection = document.getElementById('exam-section');
+        const timerDisplay = document.getElementById('timer');
+        const wordCountDisplay = document.getElementById('word-count');
+        const writingArea = document.getElementById('writing-area');
+        const finishBtn = document.getElementById('finish-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultsPanel = document.getElementById('results-panel');
+        const timerPreview = document.getElementById('timer-preview');
+        const wordsPreview = document.getElementById('words-preview');
+        const examLabel = document.getElementById('exam-label');
+        const sectionLabel = document.getElementById('section-label');
+        const questionText = document.getElementById('question-text');
+        const minWordsDisplay = document.getElementById('min-words');
+        const minWordsLabel = document.getElementById('min-words-label');
+
+        const config = {
+            tef: {
+                a: { time: 25, minWords: 80 },
+                b: { time: 35, minWords: 200 }
+            },
+            tcf: {
+                a: { time: 30, minWords: 60 },
+                b: { time: 30, minWords: 120 }
+            }
+        };
+
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let elapsedSeconds = 0;
+        let currentMinWords = 80;
+
+        // Theme handling
+        function getPreferredTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        // Initialize theme
+        setTheme(getPreferredTheme());
+
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'light' ? 'dark' : 'light');
+        });
+
+        function updatePreview() {
+            const exam = examType.value;
+            const sec = section.value;
+            const cfg = config[exam][sec];
+            
+            timerPreview.textContent = `${cfg.time} minutes`;
+            wordsPreview.textContent = `${cfg.minWords} mots`;
+        }
+
+        examType.addEventListener('change', updatePreview);
+        section.addEventListener('change', updatePreview);
+
+        function countWords(text) {
+            const trimmed = text.trim();
+            if (trimmed === '') return 0;
+            return trimmed.split(/\s+/).filter(word => word.length > 0).length;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateWordCount() {
+            const count = countWords(writingArea.value);
+            wordCountDisplay.textContent = count;
+            
+            wordCountDisplay.classList.remove('good', 'warning');
+            if (count >= currentMinWords) {
+                wordCountDisplay.classList.add('good');
+            } else if (count >= currentMinWords * 0.7) {
+                wordCountDisplay.classList.add('warning');
+            }
+        }
+
+        function updateTimer() {
+            elapsedSeconds++;
+            const remaining = Math.max(0, totalSeconds - elapsedSeconds);
+            timerDisplay.textContent = formatTime(remaining);
+
+            timerDisplay.classList.remove('warning', 'danger');
+            if (remaining <= 60) {
+                timerDisplay.classList.add('danger');
+            } else if (remaining <= 300) {
+                timerDisplay.classList.add('warning');
+            }
+
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                finishSession();
+            }
+        }
+
+        function startExam() {
+            const exam = examType.value;
+            const sec = section.value;
+            const cfg = config[exam][sec];
+            
+            totalSeconds = cfg.time * 60;
+            currentMinWords = cfg.minWords;
+            elapsedSeconds = 0;
+
+            examLabel.textContent = exam.toUpperCase() + ' Canada';
+            sectionLabel.textContent = 'Section ' + sec.toUpperCase();
+            minWordsDisplay.textContent = cfg.minWords;
+            minWordsLabel.textContent = cfg.minWords;
+
+            const question = questionInput.value.trim() || 'No question provided. Write your response below.';
+            questionText.textContent = question;
+
+            timerDisplay.textContent = formatTime(totalSeconds);
+            timerDisplay.classList.remove('warning', 'danger');
+            wordCountDisplay.textContent = '0';
+            wordCountDisplay.classList.remove('good', 'warning');
+            writingArea.value = '';
+            writingArea.disabled = false;
+            resultsPanel.classList.add('hidden');
+
+            setupSection.classList.add('hidden');
+            examSection.classList.remove('hidden');
+
+            writingArea.focus();
+
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function finishSession() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            writingArea.disabled = true;
+
+            const finalWordCount = countWords(writingArea.value);
+            const timeUsed = elapsedSeconds;
+            const wpm = timeUsed > 0 ? Math.round((finalWordCount / timeUsed) * 60) : 0;
+
+            document.getElementById('final-words').textContent = finalWordCount;
+            document.getElementById('final-time').textContent = formatTime(timeUsed);
+            document.getElementById('final-wpm').textContent = wpm;
+
+            resultsPanel.classList.remove('hidden');
+            resultsPanel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetExam() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            if (confirm('Are you sure you want to reset? Your current work will be lost.')) {
+                examSection.classList.add('hidden');
+                setupSection.classList.remove('hidden');
+                writingArea.value = '';
+                writingArea.disabled = false;
+                resultsPanel.classList.add('hidden');
+            }
+        }
+
+        function newSession() {
+            examSection.classList.add('hidden');
+            setupSection.classList.remove('hidden');
+            writingArea.value = '';
+            writingArea.disabled = false;
+            resultsPanel.classList.add('hidden');
+        }
+
+        // Accent keyboard
+        document.querySelectorAll('.accent-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const char = this.getAttribute('data-char');
+                const start = writingArea.selectionStart;
+                const end = writingArea.selectionEnd;
+                const text = writingArea.value;
+                
+                writingArea.value = text.substring(0, start) + char + text.substring(end);
+                writingArea.selectionStart = writingArea.selectionEnd = start + char.length;
+                writingArea.focus();
+                updateWordCount();
+            });
+        });
+
+        writingArea.addEventListener('input', updateWordCount);
+        startBtn.addEventListener('click', startExam);
+        finishBtn.addEventListener('click', finishSession);
+        resetBtn.addEventListener('click', resetExam);
+        document.getElementById('new-session-btn').addEventListener('click', newSession);
+
+        updatePreview();
+    </script>
+</body>
+</html>
