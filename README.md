@@ -2,14 +2,14 @@
 
 A free, open-source practice tool for the **Expression Écrite** (Written Expression) section of TEF Canada and TCF Canada exams.
 
-🔗 **Live Demo:** [your-username.github.io/tef-tcf-writing-practice-keyboard](https://sabira-khan.github.io/tef-tcf-writing-practice-keyboard/)
+🔗 **Live Demo:** [sabira-khan.github.io/tef-tcf-writing-practice-keyboard](https://sabira-khan.github.io/tef-tcf-writing-practice-keyboard/)
 
 
 ---
 
 ## Why this tool?
 
-During the real TEF/TCF exam, the **hold-to-reveal accent method doesn't work** on exam computers. This tool simulates that environment with an **on-screen French accent keyboard** so you can practice typing at speed without relying on OS shortcuts.
+During the real TEF/TCF exam, in certain centers, the **hold-to-reveal accent method doesn't work** on exam computers. This tool simulates that environment with an **on-screen French accent keyboard** so you can practice typing at speed without relying on OS shortcuts.
 
 ---
 
@@ -52,19 +52,6 @@ During the real TEF/TCF exam, the **hold-to-reveal accent method doesn't work** 
 ## Run Locally
 
 Just download `index.html` and open it in your browser. No server needed.
-
----
-
-## Deploy Your Own
-
-### GitHub Pages (free)
-1. Fork this repo
-2. Go to Settings → Pages → Deploy from branch `main`
-3. Your site will be live at `https://your-username.github.io/tef-tcf-writing-practice-keyboard/`
-
-### Other options
-- **Netlify:** Drag and drop at [app.netlify.com/drop](https://app.netlify.com/drop)
-- **Vercel:** Import from GitHub at [vercel.com](https://vercel.com)
 
 ---
 
