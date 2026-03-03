@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Practice your French writing for TEF Canada and TCF Canada exams with a timed environment, accent keyboard, and word counter. Free and works offline.">
     <title>TEF / TCF Writing Practice</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%233b82f6'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text x='50' y='72' font-family='sans-serif' font-size='65' font-weight='bold' fill='white' text-anchor='middle'>É</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -576,9 +578,11 @@
 
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 2rem 1.5rem;
             color: var(--text-muted);
             font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
         }
 
         footer a {
@@ -588,6 +592,27 @@
 
         footer a:hover {
             text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links span {
+            color: var(--border-color);
+        }
+
+        .footer-heart {
+            color: var(--accent-red);
+        }
+
+        .footer-contrib {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
         }
 
         @media (max-width: 640px) {
@@ -754,10 +779,11 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
                 <div class="min-words">Objectif: <span id="min-words-label">80</span> mots minimum</div>
             </div>
 
-            <textarea 
-                id="writing-area" 
-                class="writing-area" 
+            <textarea
+                id="writing-area"
+                class="writing-area"
                 placeholder="Commencez à écrire ici..."
+                aria-label="Zone de rédaction"
             ></textarea>
 
             <div class="actions">
@@ -797,7 +823,16 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
         </div>
 
         <footer>
-            <p>Built for TEF/TCF practice • <a href="https://www.lefrancaisdesaffaires.fr" target="_blank">Official TEF Info</a></p>
+            <div class="footer-links">
+                <a href="https://www.lefrancaisdesaffaires.fr" target="_blank" rel="noopener">Official TEF</a>
+                <span>•</span>
+                <a href="https://www.france-education-international.fr/test/tcf-canada" target="_blank" rel="noopener">Official TCF</a>
+                <span>•</span>
+                <a href="https://github.com/sabira-khan/tef-tcf-writing-practice-keyboard" target="_blank" rel="noopener">Contribute on GitHub</a>
+                <span>•</span>
+                <a href="https://buymeacoffee.com/sabira_khan" target="_blank" rel="noopener">Buy Me a Coffee ☕</a>
+            </div>
+            <p>Made with <span class="footer-heart">&#9829;</span> by <a href="https://sabira-khan.netlify.app/" target="_blank" rel="noopener">Sabira Khan</a></p>
         </footer>
     </div>
 
@@ -1002,6 +1037,13 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
                 writingArea.focus();
                 updateWordCount();
             });
+        });
+
+        // Warn before closing tab during active exam
+        window.addEventListener('beforeunload', function(e) {
+            if (timerInterval) {
+                e.preventDefault();
+            }
         });
 
         writingArea.addEventListener('input', updateWordCount);
