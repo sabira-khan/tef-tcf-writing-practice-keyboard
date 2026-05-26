@@ -350,6 +350,10 @@
             color: var(--accent-orange);
         }
 
+        .word-count-number.over {
+            color: var(--accent-red);
+        }
+
         .word-count-label {
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -733,7 +737,7 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
                 <div class="word-count">
                     <span class="word-count-number" id="word-count">0</span>
                     <span class="word-count-label">mots</span>
-                    <span class="word-count-min">minimum: <span id="min-words">80</span></span>
+                    <span class="word-count-min">objectif: <span id="min-words">80</span></span>
                 </div>
             </div>
 
@@ -776,7 +780,7 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
                     <div class="status-dot"></div>
                     <span>En cours</span>
                 </div>
-                <div class="min-words">Objectif: <span id="min-words-label">80</span> mots minimum</div>
+                <div class="min-words">Objectif: <span id="min-words-label">80</span> mots</div>
             </div>
 
             <textarea
@@ -864,15 +868,29 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
                 b: { time: 35, minWords: 200 }
             },
             tcf: {
-                a: { time: 30, minWords: 60 },
-                b: { time: 30, minWords: 120 }
+                t1: { time: 10, minWords: 60, maxWords: 120 },
+                t2: { time: 20, minWords: 120, maxWords: 180 },
+                t3: { time: 30, minWords: 120, maxWords: 180 }
             }
+        };
+
+        const sectionOptions = {
+            tef: [
+                { value: 'a', label: 'Section A' },
+                { value: 'b', label: 'Section B' }
+            ],
+            tcf: [
+                { value: 't1', label: 'Task 1 (60-120 mots)' },
+                { value: 't2', label: 'Task 2 (120-180 mots)' },
+                { value: 't3', label: 'Task 3 (120-180 mots)' }
+            ]
         };
 
         let timerInterval = null;
         let totalSeconds = 0;
         let elapsedSeconds = 0;
         let currentMinWords = 80;
+        let currentMaxWords = null;
 
         // Theme handling
         function getPreferredTheme() {
@@ -894,17 +912,37 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             setTheme(current === 'light' ? 'dark' : 'light');
         });
 
+        function populateSections() {
+            const exam = examType.value;
+            section.innerHTML = '';
+            sectionOptions[exam].forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt.value;
+                el.textContent = opt.label;
+                section.appendChild(el);
+            });
+        }
+
+        function wordRange(cfg) {
+            return cfg.maxWords ? `${cfg.minWords}-${cfg.maxWords}` : `${cfg.minWords}`;
+        }
+
         function updatePreview() {
             const exam = examType.value;
             const sec = section.value;
             const cfg = config[exam][sec];
-            
+
             timerPreview.textContent = `${cfg.time} minutes`;
-            wordsPreview.textContent = `${cfg.minWords} mots`;
+            wordsPreview.textContent = `${wordRange(cfg)} mots`;
         }
 
-        examType.addEventListener('change', updatePreview);
+        examType.addEventListener('change', () => {
+            populateSections();
+            updatePreview();
+        });
         section.addEventListener('change', updatePreview);
+
+        populateSections();
 
         function countWords(text) {
             const trimmed = text.trim();
@@ -922,8 +960,10 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             const count = countWords(writingArea.value);
             wordCountDisplay.textContent = count;
             
-            wordCountDisplay.classList.remove('good', 'warning');
-            if (count >= currentMinWords) {
+            wordCountDisplay.classList.remove('good', 'warning', 'over');
+            if (currentMaxWords && count > currentMaxWords) {
+                wordCountDisplay.classList.add('over');
+            } else if (count >= currentMinWords) {
                 wordCountDisplay.classList.add('good');
             } else if (count >= currentMinWords * 0.7) {
                 wordCountDisplay.classList.add('warning');
@@ -955,12 +995,14 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             
             totalSeconds = cfg.time * 60;
             currentMinWords = cfg.minWords;
+            currentMaxWords = cfg.maxWords || null;
             elapsedSeconds = 0;
 
+            const secLabel = sectionOptions[exam].find(o => o.value === sec).label;
             examLabel.textContent = exam.toUpperCase() + ' Canada';
-            sectionLabel.textContent = 'Section ' + sec.toUpperCase();
-            minWordsDisplay.textContent = cfg.minWords;
-            minWordsLabel.textContent = cfg.minWords;
+            sectionLabel.textContent = secLabel;
+            minWordsDisplay.textContent = wordRange(cfg);
+            minWordsLabel.textContent = wordRange(cfg);
 
             const question = questionInput.value.trim() || 'No question provided. Write your response below.';
             questionText.textContent = question;
