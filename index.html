@@ -519,6 +519,49 @@
             color: var(--text-muted);
         }
 
+        .multi-task-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow);
+        }
+
+        .multi-task-block .question-display {
+            margin-bottom: 0.75rem;
+        }
+
+        .multi-task-meta {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.5rem;
+        }
+
+        .multi-task-meta .word-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .multi-task-meta .word-count-number {
+            font-size: 1.25rem;
+        }
+
+        .multi-task-result {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .multi-task-result .word-count-number {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
         .results-panel {
             background: var(--bg-card);
             border-radius: 16px;
@@ -701,11 +744,26 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 1.5rem;">
+                <div class="form-group" id="single-prompt-group" style="margin-bottom: 1.5rem;">
                     <label for="question">Question / Prompt (paste here)</label>
-                    <textarea id="question" class="question-input" placeholder="Paste your writing prompt here... 
+                    <textarea id="question" class="question-input" placeholder="Paste your writing prompt here...
 
 Example: Voici le début d'un article de presse ; Terminez cet article : en ajoutant à la suite un texte de 80 mots minimum..."></textarea>
+                </div>
+
+                <div id="multi-prompt-group" class="hidden" style="margin-bottom: 1.5rem;">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="question-t1">Task 1 — Prompt (60-120 mots)</label>
+                        <textarea id="question-t1" class="question-input" placeholder="Paste Task 1 prompt..."></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="question-t2">Task 2 — Prompt (120-180 mots)</label>
+                        <textarea id="question-t2" class="question-input" placeholder="Paste Task 2 prompt..."></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="question-t3">Task 3 — Prompt (120-180 mots)</label>
+                        <textarea id="question-t3" class="question-input" placeholder="Paste Task 3 prompt..."></textarea>
+                    </div>
                 </div>
 
                 <div class="info-box">
@@ -826,6 +884,84 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             </div>
         </div>
 
+        <div id="exam-section-multi" class="hidden">
+            <div class="timer-display">
+                <div class="timer-info">
+                    <div class="timer-badge">
+                        <strong>TCF Canada</strong> • <span>All 3 Tasks</span>
+                    </div>
+                </div>
+                <div class="timer-clock" id="timer-multi">60:00</div>
+            </div>
+
+            <div class="accent-keyboard">
+                <button class="accent-btn" data-multi-char="à">à</button>
+                <button class="accent-btn" data-multi-char="â">â</button>
+                <button class="accent-btn" data-multi-char="ç">ç</button>
+                <button class="accent-btn" data-multi-char="é">é</button>
+                <button class="accent-btn" data-multi-char="è">è</button>
+                <button class="accent-btn" data-multi-char="ê">ê</button>
+                <button class="accent-btn" data-multi-char="ë">ë</button>
+                <button class="accent-btn" data-multi-char="î">î</button>
+                <button class="accent-btn" data-multi-char="ï">ï</button>
+                <button class="accent-btn" data-multi-char="ô">ô</button>
+                <button class="accent-btn" data-multi-char="ù">ù</button>
+                <button class="accent-btn" data-multi-char="û">û</button>
+                <button class="accent-btn" data-multi-char="ü">ü</button>
+                <button class="accent-btn" data-multi-char="œ">œ</button>
+                <div class="accent-divider"></div>
+                <button class="accent-btn" data-multi-char="À">À</button>
+                <button class="accent-btn" data-multi-char="Ç">Ç</button>
+                <button class="accent-btn" data-multi-char="É">É</button>
+                <button class="accent-btn" data-multi-char="È">È</button>
+                <button class="accent-btn" data-multi-char="Ê">Ê</button>
+                <button class="accent-btn" data-multi-char="Œ">Œ</button>
+                <div class="accent-divider"></div>
+                <button class="accent-btn" data-multi-char="«">«</button>
+                <button class="accent-btn" data-multi-char="»">»</button>
+                <button class="accent-btn" data-multi-char="'">&#39;</button>
+                <button class="accent-btn" data-multi-char="—">—</button>
+            </div>
+
+            <div id="multi-tasks"></div>
+
+            <div class="actions">
+                <button id="finish-btn-multi" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Terminer
+                </button>
+                <button id="reset-btn-multi" class="btn btn-danger">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                    Recommencer
+                </button>
+            </div>
+
+            <div id="results-panel-multi" class="results-panel hidden">
+                <div class="results-title">✓ Session terminée</div>
+                <div class="results-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="final-words-multi">0</div>
+                        <div class="stat-label">Mots total</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="final-time-multi">00:00</div>
+                        <div class="stat-label">Temps utilisé</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="final-wpm-multi">0</div>
+                        <div class="stat-label">Mots/minute</div>
+                    </div>
+                </div>
+                <div id="multi-task-breakdown" style="margin-bottom: 1rem;"></div>
+                <button id="new-session-btn-multi" class="btn btn-secondary">Nouvelle session</button>
+            </div>
+        </div>
+
         <footer>
             <div class="footer-links">
                 <a href="https://www.lefrancaisdesaffaires.fr" target="_blank" rel="noopener">Official TEF</a>
@@ -870,7 +1006,8 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             tcf: {
                 t1: { time: 10, minWords: 60, maxWords: 120 },
                 t2: { time: 20, minWords: 120, maxWords: 180 },
-                t3: { time: 30, minWords: 120, maxWords: 180 }
+                t3: { time: 30, minWords: 120, maxWords: 180 },
+                all: { time: 60, minWords: 300, maxWords: 480, multi: true }
             }
         };
 
@@ -882,9 +1019,16 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             tcf: [
                 { value: 't1', label: 'Task 1 (60-120 mots)' },
                 { value: 't2', label: 'Task 2 (120-180 mots)' },
-                { value: 't3', label: 'Task 3 (120-180 mots)' }
+                { value: 't3', label: 'Task 3 (120-180 mots)' },
+                { value: 'all', label: 'All 3 Tasks (60 min)' }
             ]
         };
+
+        const tcfAllTasks = [
+            { key: 't1', label: 'Task 1', minWords: 60, maxWords: 120 },
+            { key: 't2', label: 'Task 2', minWords: 120, maxWords: 180 },
+            { key: 't3', label: 'Task 3', minWords: 120, maxWords: 180 }
+        ];
 
         let timerInterval = null;
         let totalSeconds = 0;
@@ -912,6 +1056,16 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             setTheme(current === 'light' ? 'dark' : 'light');
         });
 
+        const singlePromptGroup = document.getElementById('single-prompt-group');
+        const multiPromptGroup = document.getElementById('multi-prompt-group');
+        const examSectionMulti = document.getElementById('exam-section-multi');
+        const timerDisplayMulti = document.getElementById('timer-multi');
+        const multiTasksContainer = document.getElementById('multi-tasks');
+        const resultsPanelMulti = document.getElementById('results-panel-multi');
+
+        let multiState = null;
+        let lastFocusedArea = null;
+
         function populateSections() {
             const exam = examType.value;
             section.innerHTML = '';
@@ -921,6 +1075,16 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
                 el.textContent = opt.label;
                 section.appendChild(el);
             });
+            updatePromptVisibility();
+        }
+
+        function updatePromptVisibility() {
+            const exam = examType.value;
+            const sec = section.value;
+            const cfg = config[exam] && config[exam][sec];
+            const isMulti = !!(cfg && cfg.multi);
+            singlePromptGroup.classList.toggle('hidden', isMulti);
+            multiPromptGroup.classList.toggle('hidden', !isMulti);
         }
 
         function wordRange(cfg) {
@@ -940,7 +1104,10 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             populateSections();
             updatePreview();
         });
-        section.addEventListener('change', updatePreview);
+        section.addEventListener('change', () => {
+            updatePreview();
+            updatePromptVisibility();
+        });
 
         populateSections();
 
@@ -992,7 +1159,12 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             const exam = examType.value;
             const sec = section.value;
             const cfg = config[exam][sec];
-            
+
+            if (cfg.multi) {
+                startMultiExam(cfg);
+                return;
+            }
+
             totalSeconds = cfg.time * 60;
             currentMinWords = cfg.minWords;
             currentMaxWords = cfg.maxWords || null;
@@ -1021,6 +1193,155 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             writingArea.focus();
 
             timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function renderMultiTasks() {
+            multiTasksContainer.innerHTML = '';
+            tcfAllTasks.forEach(task => {
+                const block = document.createElement('div');
+                block.className = 'multi-task-block';
+                block.innerHTML = `
+                    <div class="question-display">
+                        <div class="question-label">${task.label} — Consigne</div>
+                        <div class="question-text" id="multi-question-${task.key}"></div>
+                    </div>
+                    <div class="multi-task-meta">
+                        <div class="word-count">
+                            <span class="word-count-number" id="multi-count-${task.key}">0</span>
+                            <span class="word-count-label">mots</span>
+                            <span class="word-count-min">objectif: ${task.minWords}-${task.maxWords}</span>
+                        </div>
+                    </div>
+                    <textarea
+                        id="multi-area-${task.key}"
+                        class="writing-area"
+                        placeholder="Écrivez votre réponse pour ${task.label}..."
+                        aria-label="Zone de rédaction ${task.label}"
+                    ></textarea>
+                `;
+                multiTasksContainer.appendChild(block);
+            });
+        }
+
+        function updateMultiWordCount(task) {
+            const area = document.getElementById(`multi-area-${task.key}`);
+            const display = document.getElementById(`multi-count-${task.key}`);
+            const count = countWords(area.value);
+            display.textContent = count;
+            display.classList.remove('good', 'warning', 'over');
+            if (count > task.maxWords) {
+                display.classList.add('over');
+            } else if (count >= task.minWords) {
+                display.classList.add('good');
+            } else if (count >= task.minWords * 0.7) {
+                display.classList.add('warning');
+            }
+        }
+
+        function updateMultiTimer() {
+            multiState.elapsed++;
+            const remaining = Math.max(0, multiState.total - multiState.elapsed);
+            timerDisplayMulti.textContent = formatTime(remaining);
+
+            timerDisplayMulti.classList.remove('warning', 'danger');
+            if (remaining <= 60) {
+                timerDisplayMulti.classList.add('danger');
+            } else if (remaining <= 300) {
+                timerDisplayMulti.classList.add('warning');
+            }
+
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                finishMultiSession();
+            }
+        }
+
+        function startMultiExam(cfg) {
+            multiState = { total: cfg.time * 60, elapsed: 0 };
+            renderMultiTasks();
+
+            tcfAllTasks.forEach(task => {
+                const prompt = document.getElementById(`question-${task.key}`).value.trim()
+                    || `No prompt provided for ${task.label}.`;
+                document.getElementById(`multi-question-${task.key}`).textContent = prompt;
+                const area = document.getElementById(`multi-area-${task.key}`);
+                area.addEventListener('input', () => updateMultiWordCount(task));
+                area.addEventListener('focus', () => { lastFocusedArea = area; });
+            });
+
+            timerDisplayMulti.textContent = formatTime(multiState.total);
+            timerDisplayMulti.classList.remove('warning', 'danger');
+            resultsPanelMulti.classList.add('hidden');
+
+            setupSection.classList.add('hidden');
+            examSectionMulti.classList.remove('hidden');
+
+            const firstArea = document.getElementById(`multi-area-${tcfAllTasks[0].key}`);
+            firstArea.focus();
+            lastFocusedArea = firstArea;
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(updateMultiTimer, 1000);
+        }
+
+        function finishMultiSession() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            let totalWords = 0;
+            const breakdown = document.getElementById('multi-task-breakdown');
+            breakdown.innerHTML = '';
+            tcfAllTasks.forEach(task => {
+                const area = document.getElementById(`multi-area-${task.key}`);
+                area.disabled = true;
+                const count = countWords(area.value);
+                totalWords += count;
+                const status = count > task.maxWords
+                    ? 'over'
+                    : count >= task.minWords ? 'good' : 'warning';
+                const row = document.createElement('div');
+                row.className = 'multi-task-result';
+                row.innerHTML = `
+                    <strong>${task.label}</strong>
+                    <span class="word-count-number ${status}">${count}</span>
+                    <span class="word-count-label">/ ${task.minWords}-${task.maxWords} mots</span>
+                `;
+                breakdown.appendChild(row);
+            });
+
+            const timeUsed = multiState.elapsed;
+            const wpm = timeUsed > 0 ? Math.round((totalWords / timeUsed) * 60) : 0;
+            document.getElementById('final-words-multi').textContent = totalWords;
+            document.getElementById('final-time-multi').textContent = formatTime(timeUsed);
+            document.getElementById('final-wpm-multi').textContent = wpm;
+
+            resultsPanelMulti.classList.remove('hidden');
+            resultsPanelMulti.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetMultiExam() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            if (confirm('Are you sure you want to reset? Your current work will be lost.')) {
+                examSectionMulti.classList.add('hidden');
+                setupSection.classList.remove('hidden');
+                resultsPanelMulti.classList.add('hidden');
+                multiTasksContainer.innerHTML = '';
+                multiState = null;
+            }
+        }
+
+        function newSessionMulti() {
+            examSectionMulti.classList.add('hidden');
+            setupSection.classList.remove('hidden');
+            resultsPanelMulti.classList.add('hidden');
+            multiTasksContainer.innerHTML = '';
+            multiState = null;
         }
 
         function finishSession() {
@@ -1066,18 +1387,35 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
             resultsPanel.classList.add('hidden');
         }
 
-        // Accent keyboard
-        document.querySelectorAll('.accent-btn').forEach(btn => {
+        // Accent keyboard (single-task)
+        document.querySelectorAll('.accent-btn[data-char]').forEach(btn => {
             btn.addEventListener('click', function() {
                 const char = this.getAttribute('data-char');
                 const start = writingArea.selectionStart;
                 const end = writingArea.selectionEnd;
                 const text = writingArea.value;
-                
+
                 writingArea.value = text.substring(0, start) + char + text.substring(end);
                 writingArea.selectionStart = writingArea.selectionEnd = start + char.length;
                 writingArea.focus();
                 updateWordCount();
+            });
+        });
+
+        // Accent keyboard (multi-task) — inserts into the last-focused textarea
+        document.querySelectorAll('.accent-btn[data-multi-char]').forEach(btn => {
+            btn.addEventListener('mousedown', (e) => e.preventDefault());
+            btn.addEventListener('click', function() {
+                const char = this.getAttribute('data-multi-char');
+                const area = lastFocusedArea || document.getElementById(`multi-area-${tcfAllTasks[0].key}`);
+                const start = area.selectionStart;
+                const end = area.selectionEnd;
+                const text = area.value;
+
+                area.value = text.substring(0, start) + char + text.substring(end);
+                area.selectionStart = area.selectionEnd = start + char.length;
+                area.focus();
+                area.dispatchEvent(new Event('input'));
             });
         });
 
@@ -1093,6 +1431,9 @@ Example: Voici le début d'un article de presse ; Terminez cet article : en ajou
         finishBtn.addEventListener('click', finishSession);
         resetBtn.addEventListener('click', resetExam);
         document.getElementById('new-session-btn').addEventListener('click', newSession);
+        document.getElementById('finish-btn-multi').addEventListener('click', finishMultiSession);
+        document.getElementById('reset-btn-multi').addEventListener('click', resetMultiExam);
+        document.getElementById('new-session-btn-multi').addEventListener('click', newSessionMulti);
 
         updatePreview();
     </script>
